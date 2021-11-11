@@ -22,7 +22,7 @@ if(isset($_POST['añadir'])){
 
     fclose($ficheroEquipos);
  
-    echo '<h1>Equipos Guardados</h1>
+    echo '<h1>Guillermo maricon</h1>
             <form action="formularioLiga.php" method="post">
             <button type="submit">Volver</button>
             </form>';
