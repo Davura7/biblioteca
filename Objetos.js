@@ -37,13 +37,13 @@ Articulo.prototype.toHTMLRow=function(){
 //Clase libro
 
 
-function Articulo(autor,paginas){
+function Libro(autor,paginas){
     this.idArticulo=iIdArticulo;
     this.autor=sTitulo;
     
 }
 
-Articulo.prototype.toHTMLRow=function(){
+Libro.prototype.toHTMLRow=function(){
     let sFila="<tr>";
     sFila+="<td>"+this.idArticulo+"</td>";
     sFila+="<td>"+this.titulo+"</td></tr>";
