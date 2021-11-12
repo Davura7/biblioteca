@@ -1,4 +1,26 @@
 "use strict"
+
+//Clase Biblioteca
+
+function Biblioteca(){
+this.usuarios=[];
+this.articulos=[];
+this.prestamos=[];
+}
+
+Bibilioteca.prototype.optionsCatalogo = function(){
+
+    let sOptions = "";
+    
+    for(articulo of this.articulo){
+        if(articulo.prestado==false){
+         sOptions+= '<option value="'+articulo.idArticulo+'">'+articulo.titulo+'</option>';
+            }
+    }
+    
+}
+
+
 //Clase usuario
 
 function Usuario(iIdUsuario,sNombre,sApellidos,iTelefono){
