@@ -1,5 +1,38 @@
 "use strict";
 
+function contieneUsuario(oUsuario){
+    for (const ejUsuario of this.usuarios) {
+
+        if (ejUsuario.idUsuario == oUsuario.idUsuario)
+            return true;
+
+
+    }
+    return false;
+}
+
+function contieneArticulo(oArticulo){
+    for (const ejArticulo of this.catalogo) {
+
+        if (ejArticulo.idArticulo == oArticulo.idArticulo)
+            return true;
+
+
+    }
+    return false;
+}
+
+function contienePrestamo(oPrestamo){
+    for (const ejPrestamo of this.prestamos) {
+
+        if (ejPrestamo.idPrestamo == oPrestamo.idPrestamo)
+            return true;
+
+
+    }
+    return false;
+}
+
 //Clase Biblioteca
 
 function Biblioteca(){
@@ -34,40 +67,47 @@ Biblioteca.prototype.optionsDVD = function(){
     return sOptions;
 }
 
-Biblioteca.prototype.altaUsuario = function(){
-    if(!contiene(oUsuario)){ //hay que hacer contiene();
+Biblioteca.prototype.altaUsuario = function(oUsuario){
+    if(!contieneUsuario(oUsuario)){ //hay que hacer contiene();
         this.usuarios.push(oUsuario);
-        return alert('Usuario dado de alta');
+        return 'Usuario dado de alta';
     }
     else
-        return alert('Usuario existente');
+        return 'Usuario existente';
 }
 
-Biblioteca.prototype.altaArticulo = function(){
-    if(!contiene(oArticulo)){ //hay que hacer contiene();
+Biblioteca.prototype.altaArticulo = function(oArticulo){
+    if(!contieneArticulo(oArticulo)){ //hay que hacer contiene();
         this.catalogo.push(oArticulo);
-        return alert('Articulo dado de alta');
+        return 'Articulo dado de alta';
     }
     else
-        return alert('Articulo existente');
+        return 'Articulo existente';
 }
 
-Biblioteca.prototype.altaPrestamo = function(){
-    if(!contiene(oPrestamo)){ //hay que hacer contiene();
+Biblioteca.prototype.altaPrestamo = function(oPrestamo){
+    if(!contienePrestamo(oPrestamo)){ //hay que hacer contiene();
         this.prestamos.push(oPrestamo);
-        return alert('Prestamo dado de alta');
+        return 'Prestamo dado de alta';
     }
     else
-        return alert('Prestamo existente');
+        return 'Prestamo existente';
 }
 
-Biblioteca.prototype.devolverPrestamo = function(){
+Biblioteca.prototype.devolverPrestamo = function(idPrestamo){
 
+    for (const prestamoBucle of this.prestamos) {
+        if(prestamoBucle.idPrestamo == idPrestamo){
+            this.prestamos.remove(prestamoBucle);
+        return "Préstamo devuelto.";
+        }
+        return "Préstamo no existente.";
+    }
 }
 
 Biblioteca.prototype.listadoUsuarios = function(){
     let tUsuarios = '<table><tr><th>ID</th><th>Nombre</th><th>Apellidos</th><th>Teléfono</th></tr>';
-    for(const oUsuario of usuarios){
+    for(const oUsuario of this.usuarios){
         tUsuario+=toHTMLRow(oUsuario);
     }
     tUsuarios+= '</table>';
@@ -84,9 +124,9 @@ Biblioteca.prototype.listadoArticulos = function(){
 }
 
 
-Biblioteca.prototype.listadoPrestamos = function(){
+Biblioteca.prototype.listadoPrestamos = function(dtFechaInicio, dtFechaFin){
     let tPrestamos = '<table><tr><th>IdPréstamo</th><th>Artículos</th><th>Usuario</th><th>FechaInicio</th><th>FechaFin</th></tr>';
-    for(const oPrestamo of prestamos){
+    for(const oPrestamo of this.prestamos){
         if(dtFechaInicio<oPrestamo.fechaFin && dtFechaFin>oPrestamo.fechaInicio)
         tPrestamos+=toHTMLRow(oPrestamo);
         
@@ -95,6 +135,35 @@ Biblioteca.prototype.listadoPrestamos = function(){
     return tPrestamos;
 }
 
+Biblioteca.prototype.listadoPrestamosUsuario = function(idUsuario){
+    let tPrestamos = '<table><tr><th>IdPréstamo</th><th>Artículos</th><th>Usuario</th><th>FechaInicio</th><th>FechaFin</th></tr>';
+    for(const oPrestamo of this.prestamos){
+        if(idUsuario==oPrestamo.idUsuario)
+        tPrestamos+=toHTMLRow(oPrestamo);
+        
+    }
+    tPrestamos+= '</table>';
+    return tPrestamos;
+}
+
+
+Biblioteca.prototype.listadoTipoArticulo = function(sTipoArticulo){
+    // NO SE SI ESTO FUNCIONA, ASÍ QUE TEN UN BUEN DÍA
+    let tPrestamos = '<table><tr><th>IdArtículo</th><th>Título</th>';
+    
+    for(const oPrestamo of this.prestamos){
+        if(sTipoArticulo instanceof Libro && oPrestamo instanceof Libro){
+            tPrestamos+='<th>Autor</th><th>Paginas</th></tr>';
+            tPrestamos+=toHTMLRow(oPrestamo);
+        }
+        if(sTipoArticulo instanceof DVD && oPrestamo instanceof DVD){
+            tPrestamos+='<th>Fecha de Estreno</th><th>Subtitulada</th></tr>';
+            tPrestamos+=toHTMLRow(oPrestamo);
+        }
+    }
+    tPrestamos+= '</table>';
+    return tPrestamos;
+}
 
 
 
@@ -203,3 +272,4 @@ class Prestamo {
         return sFila;
     }
 }
+
