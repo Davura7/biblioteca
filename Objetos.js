@@ -8,16 +8,30 @@ this.catalogo=[];
 this.prestamos=[];
 }
 
-Bibilioteca.prototype.optionsCatalogo = function(){
+Biblioteca.prototype.optionsLibros = function(){
 
-    let sOptions = "";
-    
-    for(Articulo of this.articulo){
-        if(Articulo.prestado==false){
-         sOptions+= '<option value="'+Articulo.idArticulo+'">'+Articulo.titulo+'</option>';
-            }
+    let sOptions = '<option value="-1">Ninguno</option>';
+
+    for(let articulo of this.articulos){
+        if (articulo.prestado == false){ // && articulo instanceof Libro){
+            sOptions += '<option value="' + articulo.idArticulo + '">' + articulo.nombre + '</option>';
+        }
     }
-    
+
+    return sOptions;
+}
+
+Biblioteca.prototype.optionsDVD = function(){
+
+    let sOptions = '<option value="-1">Ninguno</option>';
+
+    for(let articulo of this.articulos){ 
+        if (articulo.prestado == false){ // && articulo instanceof DVD
+            sOptions += '<option value="' + articulo.idArticulo + '">' + articulo.nombre + '</option>';
+        }
+    }
+
+    return sOptions;
 }
 
 function altaUsuario(oUsuario){
