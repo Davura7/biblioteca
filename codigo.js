@@ -1,7 +1,7 @@
-
 // Variables globales
 var oBiblioteca = new Biblioteca();
 datosIniciales();
+
 
 function datosIniciales(){
     oBiblioteca.catalogo = [ 
@@ -51,3 +51,29 @@ function gestionFormularios(sFormularioVisible) {
     }
   }
 
+
+
+  //Ejercicio 1:
+
+  function validarDatos() {
+    
+    let idUsuario = frmAltaUsuario.txtIdUsuario.value;
+    let nombre = frmAltaUsuario.txtNombre.value;
+    let apellidos = frmAltaUsuario.txtApellidos.value;
+    let telefono = frmAltaUsuario.txtTelefono.value;
+    
+    if (idUsuario == '' ||
+    nombre == '' ||
+    apellidos == ''||
+    telefono == "")
+    alert('Debe introducir todos los datos');
+    
+    else {    
+      let oUsuario=new Usuario(idUsuario, nombre, apellidos, telefono);
+      alert(oBibilioteca.altaUsuario(oUsuario));
+    }
+
+    // Una vez comprobado los datos, vemos si ya existe esa bici, si no existe la damos de alta
+
+    
+}
