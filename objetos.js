@@ -151,16 +151,22 @@ Biblioteca.prototype.listadoTipoArticulo = function(sTipoArticulo){
     // NO SE SI ESTO FUNCIONA, ASÍ QUE TEN UN BUEN DÍA
     let tPrestamos = '<table><tr><th>IdArtículo</th><th>Título</th>';
     
+    if(sTipoArticulo instanceof Libro){
+    tPrestamos+='<th>Autor</th><th>Paginas</th></tr>';
     for(const oPrestamo of this.prestamos){
-        if(sTipoArticulo instanceof Libro && oPrestamo instanceof Libro){
-            tPrestamos+='<th>Autor</th><th>Paginas</th></tr>';
-            tPrestamos+=toHTMLRow(oPrestamo);
-        }
-        if(sTipoArticulo instanceof DVD && oPrestamo instanceof DVD){
-            tPrestamos+='<th>Fecha de Estreno</th><th>Subtitulada</th></tr>';
+        if(oPrestamo instanceof Libro){
             tPrestamos+=toHTMLRow(oPrestamo);
         }
     }
+    
+    if(sTipoArticulo instanceof DVD){
+    tPrestamos+='<th>Fecha de Estreno</th><th>Subtitulada</th></tr>';
+    for(const oPrestamo of this.prestamos){
+        if(oPrestamo instanceof DVD){
+            tPrestamos+=toHTMLRow(oPrestamo);
+        }
+    }
+}
     tPrestamos+= '</table>';
     return tPrestamos;
 }
