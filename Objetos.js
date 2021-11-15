@@ -143,10 +143,10 @@ class Articulo{
 
 class Libro extends Articulo{
     constructor(autor, paginas,idArticulo, titulo) {
+        super(idArticulo, titulo);
         this.autor = autor;
         this.paginas = paginas;
 
-        super(idArticulo, titulo);
     }
 
 
@@ -165,9 +165,9 @@ class Libro extends Articulo{
 
 class DVD extends Articulo{
     constructor(fechaEstreno, subtitulada,idArticulo, titulo) {
+        super(idArticulo, titulo);
         this.fechaEstreno = new Date;
         this.subtitulada = false;
-        super(idArticulo, titulo);
     }
 
 
