@@ -34,38 +34,38 @@ Biblioteca.prototype.optionsDVD = function(){
     return sOptions;
 }
 
-function altaUsuario(oUsuario){
+Biblioteca.prototype.altaUsuario = function(){
     if(!contiene(oUsuario)){ //hay que hacer contiene();
-        Biblioteca.usuarios.push(oUsuario);
+        this.usuarios.push(oUsuario);
         return alert('Usuario dado de alta');
     }
     else
         return alert('Usuario existente');
 }
 
-function altaArticulo(oArticulo){
+Biblioteca.prototype.altaArticulo = function(){
     if(!contiene(oArticulo)){ //hay que hacer contiene();
-        Biblioteca.catalogo.push(oArticulo);
+        this.catalogo.push(oArticulo);
         return alert('Articulo dado de alta');
     }
     else
         return alert('Articulo existente');
 }
 
-function altaPrestamo(oPrestamo){
+Biblioteca.prototype.altaPrestamo = function(){
     if(!contiene(oPrestamo)){ //hay que hacer contiene();
-        Biblioteca.prestamos.push(oPrestamo);
+        this.prestamos.push(oPrestamo);
         return alert('Prestamo dado de alta');
     }
     else
         return alert('Prestamo existente');
 }
 
-function devolverPrestamo(idPrestamo){
+Biblioteca.prototype.devolverPrestamo = function(){
 
 }
 
-function listadoUsuarios(){
+Biblioteca.prototype.listadoUsuarios = function(){
     let tUsuarios = '<table><tr><th>ID</th><th>Nombre</th><th>Apellidos</th><th>Teléfono</th></tr>';
     for(const oUsuario of usuarios){
         tUsuario+=toHTMLRow(oUsuario);
@@ -74,7 +74,7 @@ function listadoUsuarios(){
     return tUsuarios;
 }
 
-function listadoArticulos(){
+Biblioteca.prototype.listadoArticulos = function(){
     let tArticulo = '<table><tr><th>ID</th><th>Titulo</th></tr>';
     for(const oArticulo of catalogo){
         tArticulo+=toHTMLRow(oArticulo);
@@ -84,7 +84,7 @@ function listadoArticulos(){
 }
 
 
-function listadoPrestamos(dtFechaInicio, dtFechaFin){
+Biblioteca.prototype.listadoPrestamos = function(){
     let tPrestamos = '<table><tr><th>IdPréstamo</th><th>Artículos</th><th>Usuario</th><th>FechaInicio</th><th>FechaFin</th></tr>';
     for(const oPrestamo of prestamos){
         if(dtFechaInicio<oPrestamo.fechaFin && dtFechaFin>oPrestamo.fechaInicio)
@@ -166,8 +166,8 @@ class Libro extends Articulo{
 class DVD extends Articulo{
     constructor(fechaEstreno, subtitulada,idArticulo, titulo) {
         super(idArticulo, titulo);
-        this.fechaEstreno = new Date;
-        this.subtitulada = false;
+        this.fechaEstreno = fechaEstreno;
+        this.subtitulada = subtitulada;
     }
 
 
@@ -186,10 +186,10 @@ class DVD extends Articulo{
 class Prestamo {
     constructor(idPrestamo, articulos, usuario, fechaInicio, fechaFin) {
         this.idPrestamo = idPrestamo;
-        this.articulos = [];
-        this.usuario = new Usuario;
-        this.fechaInicio=new Date;
-        this.fechaFin=new Date;       
+        this.articulos = articulos;
+        this.usuario = usuario;
+        this.fechaInicio=fechaInicio;
+        this.fechaFin=fechaFin;       
     }
     
     toHTMLRow() {
