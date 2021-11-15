@@ -71,7 +71,7 @@ function listadoArticulos(){
 
 
 function listadoPrestamos(dtFechaInicio, dtFechaFin){
-    let tPrestamos = '<table><tr><th>ID</th><th>Nombre</th><th>Apellidos</th><th>Teléfono</th></tr>';
+    let tPrestamos = '<table><tr><th>IdPréstamo</th><th>Artículos</th><th>Usuario</th><th>FechaInicio</th><th>FechaFin</th></tr>';
     for(const oPrestamo of prestamos){
         if(dtFechaInicio<oPrestamo.fechaFin && dtFechaFin>oPrestamo.fechaInicio)
         tPrestamos+=toHTMLRow(oPrestamo);
@@ -88,11 +88,11 @@ function listadoPrestamos(dtFechaInicio, dtFechaFin){
 //Clase usuario
 
 class Usuario {
-    constructor(iIdUsuario, sNombre, sApellidos, iTelefono) {
-        this.idUsuario = iIdUsuario;
-        this.nombre = sNombre;
-        this.apellidos = sApellidos;
-        this.telefono = iTelefono;
+    constructor(idUsuario, nombre, apellidos, telefono) {
+        this.idUsuario = idUsuario;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.telefono = telefono;
     }
     toHTMLRow() {
         let sFila = "<tr>";
@@ -108,10 +108,10 @@ class Usuario {
 
 //Clase articulo
 
-class Articulo {
-    constructor(iIdArticulo, sTitulo) {
-        this.idArticulo = iIdArticulo;
-        this.titulo = sTitulo;
+class Articulo{
+    constructor(idArticulo, titulo) {
+        this.idArticulo = idArticulo;
+        this.titulo = titulo;
 
     }
     toHTMLRow() {
@@ -127,16 +127,40 @@ class Articulo {
 //Clase libro
 
 
-class Libro {
+class Libro extends Articulo{
     constructor(autor, paginas) {
-        this.idArticulo = iIdArticulo;
-        this.autor = sTitulo;
-
+        this.autor = autor;
+        this.paginas = paginas;
     }
+
+    super(idArticulo, titulo);
+
     toHTMLRow() {
         let sFila = "<tr>";
         sFila += "<td>" + this.idArticulo + "</td>";
         sFila += "<td>" + this.titulo + "</td></tr>";
+
+        return sFila;
+    }
+}
+
+
+//Clase DVD
+
+
+class DVD extends Articulo{
+    constructor(fechaEstreno, subtitulada) {
+        this.fechaEstreno = new Date;
+        this.subtitulada = false;
+
+    }
+
+    super(idArticulo, titulo);
+
+    toHTMLRow() {
+        let sFila = "<tr>";
+        sFila += "<td>" + this.fechaEstreno + "</td>";
+        sFila += "<td>" + this.subtitulada + "</td></tr>";
 
         return sFila;
     }
@@ -151,10 +175,9 @@ class Prestamo {
         this.articulos = [];
         this.usuario = new Usuario;
         this.fechaInicio=new Date;
-        this.fechaFin=new Date;
-        
-
+        this.fechaFin=new Date;       
     }
+    
     toHTMLRow() {
         let sFila = "<tr>";
         sFila += "<td>" + this.idPrestamo + "</td>";
@@ -166,5 +189,3 @@ class Prestamo {
         return sFila;
     }
 }
-
-
