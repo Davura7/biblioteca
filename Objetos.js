@@ -142,12 +142,13 @@ class Articulo{
 
 
 class Libro extends Articulo{
-    constructor(autor, paginas) {
+    constructor(autor, paginas,idArticulo, titulo) {
         this.autor = autor;
         this.paginas = paginas;
+
+        super(idArticulo, titulo);
     }
 
-    super(idArticulo, titulo);
 
     toHTMLRow() {
         let sFila = "<tr>";
@@ -163,13 +164,12 @@ class Libro extends Articulo{
 
 
 class DVD extends Articulo{
-    constructor(fechaEstreno, subtitulada) {
+    constructor(fechaEstreno, subtitulada,idArticulo, titulo) {
         this.fechaEstreno = new Date;
         this.subtitulada = false;
-
+        super(idArticulo, titulo);
     }
 
-    super(idArticulo, titulo);
 
     toHTMLRow() {
         let sFila = "<tr>";
