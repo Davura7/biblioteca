@@ -109,11 +109,11 @@
               <label class="col-xs-4 control-label" for="rbtTipoArticulo">Tipo de articulo</label>
               <div class="col-xs-4">
                   <div class="radio">
-                      <input name="rbtTipoArticulo" id="rbtTipoArticulo-L" value="libro" type="radio" onclick="mostrarFrmSegunArticulo();">
+                      <input name="rbtTipoArticulo" id="rbtTipoArticulo-L" onchange="cambioRadioButton();" value="libro" type="radio" checked>
                       <label for="rbtTipoArticulo-L">Libro</label>
                   </div>
                   <div class="radio">
-                      <input name="rbtTipoArticulo" id="rbtTipoArticulo-D" value="dvd" type="radio" onclick="mostrarFrmSegunArticulo();">
+                      <input name="rbtTipoArticulo" id="rbtTipoArticulo-D" onchange="cambioRadioButton();" value="dvd" type="radio">
                       <label for="rbtTipoArticulo-D">DVD</label>
                   </div>
               </div>
@@ -134,7 +134,7 @@
             </div>
           </div>
             <!-- Text input-->
-          <div class="frmDVD">
+          <div class="frmDVD" style="display: none;">
             <div class="form-group">
               <label class="col-xs-4 control-label" for="dtFechaEstreno">Fecha de estreno</label>
               <div class="col-xs-4">
@@ -145,7 +145,7 @@
               <label class="col-xs-4 control-label" for="rbtSubtitulado">Subtitulada</label>
               <div class="col-xs-4">
                   <div class="radio">
-                      <input name="rbtSubtitulado" id="rbtSubtitulado-S" value="Si" type="radio">
+                      <input name="rbtSubtitulado" id="rbtSubtitulado-S" value="Si" type="radio" checked>
                       <label for="rbtSubtitulado-S">Si</label>
                   </div>
                   <div class="radio">
@@ -159,7 +159,7 @@
         <div class="form-group">
           <label class="col-xs-4 control-label" for="btnAceptarAltaArticulo"></label>
           <div class="col-xs-4">
-              <input type="button" name="btnAceptarAltaArticulo" id="btnAceptarAltaArticulo" value="Aceptar"class="btn btn-primary"/>
+              <input type="button" name="btnAceptarAltaArticulo" id="btnAceptarAltaArticulo" value="Aceptar"class="btn btn-primary" onclick="validarDatosArticulo()"/>
           </div>
         </div>
         </fieldset>
