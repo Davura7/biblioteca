@@ -62,11 +62,11 @@ function gestionFormularios(sFormularioVisible) {
     let apellidos = frmAltaUsuario.txtApellidos.value;
     let telefono = frmAltaUsuario.txtTelefono.value;
     
-    if (idUsuario == '' ||
-    nombre == '' ||
-    apellidos == ''||
-    telefono == "")
-    alert('Debe introducir todos los datos');
+    if (idUsuario == NaN ||
+    nombre.length==0 ||
+    apellidos.length==0||
+    telefono == NaN)
+    alert('Debe introducir todos los datos correctamente');
     
     else {    
       let oUsuario=new Usuario(idUsuario, nombre, apellidos, telefono);
