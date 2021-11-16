@@ -127,7 +127,7 @@ Biblioteca.prototype.listadoArticulos = function(){
 Biblioteca.prototype.listadoPrestamos = function(dtFechaInicio, dtFechaFin){
     let tPrestamos = '<table><tr><th>IdPréstamo</th><th>Artículos</th><th>Usuario</th><th>FechaInicio</th><th>FechaFin</th></tr>';
     for(const oPrestamo of this.prestamos){
-        if(dtFechaInicio<oPrestamo.fechaFin && dtFechaFin>oPrestamo.fechaInicio)
+        if(dtFechaInicio<oPrestamo.fechaInicio && dtFechaFin>oPrestamo.fechaInicio)
         tPrestamos+=toHTMLRow(oPrestamo);
         
     }
