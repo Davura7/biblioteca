@@ -171,9 +171,9 @@
           
             <!-- Text input-->
             <div class="form-group">
-              <label class="col-xs-4 control-label" for="txtIdPrestamo">ID Artículo</label>
+              <label class="col-xs-4 control-label" for="txtIdPrestamo">ID Préstamo</label>
               <div class="col-xs-4">
-                  <input id="txtIdPrestamo" name="txtIdPrestamo" placeholder="ID Prestamo" class="form-control input-md" type="text">
+                  <input id="txtIdPrestamo" name="txtIdPrestamo" placeholder="ID Préstamo" class="form-control input-md" type="text">
               </div>
             </div>
 
@@ -181,12 +181,12 @@
             <div class="form-group">
                 <label class="col-xs-4 control-label" for="lstLibros1">Libro 1</label>
                 <div class="col-xs-4">
-                    <select id="lstLibros1" name="lstLibros1" class="form-control input-md">
+                    <select id="lstLibros1" onchange="mostrar2Combos()" name="lstLibros1" class="form-control input-md">
                     </select>
                 </div>
             </div>
             <!-- Select -->
-            <div class="form-group">
+            <div class="form-group" id="divLibro" style="display: none;">
                 <label class="col-xs-4 control-label" for="lstLibros2">Libro 2</label>
                 <div class="col-xs-4">
                     <select id="lstLibros2" name="lstLibros2" class="form-control input-md">
@@ -197,12 +197,12 @@
             <div class="form-group">
                 <label class="col-xs-4 control-label" for="lstDVD1">DVD 1</label>
                 <div class="col-xs-4">
-                    <select id="lstDVD1" name="lstDVD1" class="form-control input-md">
+                    <select id="lstDVD1" onchange="mostrar2Combos()" name="lstDVD1" class="form-control input-md">
                     </select>
                 </div>
             </div>
             <!-- Select -->
-            <div class="form-group">
+            <div class="form-group"  id="divDVD" style="display: none;"> 
                 <label class="col-xs-4 control-label" for="lstDVD2">DVD 2</label>
                 <div class="col-xs-4">
                     <select id="lstDVD2" name="lstDVD2" class="form-control input-md">
@@ -211,32 +211,21 @@
             </div>
              <!-- Text input-->
              <div class="form-group">
-              <label class="col-xs-4 control-label" for="txtIdUsuario">ID Usuario</label>
+              <label class="col-xs-4 control-label" for="lstUsuario">Usuario</label>
               <div class="col-xs-4">
-                  <input id="txtIdUsuario" name="txtIdUsuario" placeholder="ID Usuario" class="form-control input-md" type="text">
+                  <select id="lstUsuario" name="lstUsuario" class="form-control input-md"></select>
               </div>
             </div>
-            <!-- Text input-->
-            <div class="form-group">
-              <label class="col-xs-4 control-label" for="txtFechaInicio">Fecha inicio</label>
-              <div class="col-xs-4">
-                  <input id="txtFechaInicio" name="txtFechaInicio" placeholder="Fecha Inicio" class="form-control input-md" type="text">
-              </div>
-            </div>
-            <!-- Text input-->
-            <div class="form-group">
-              <label class="col-xs-4 control-label" for="txtFechaFin">Fecha fin</label>
-              <div class="col-xs-4">
-                  <input id="txtFechaFin" name="txtFechaFin" placeholder="Fecha Fin" class="form-control input-md" type="text">
-              </div>
-            </div>
+      
+            
+            
 
 
             <!-- Botón Aceptar Alta Prestamo -->
             <div class="form-group">
               <label class="col-xs-4 control-label" for="btnAceptarAltaPrestamo"></label>
                 <div class="col-xs-4">
-                    <input type="button" name="btnAceptarAltaPrestamo" id="btnAceptarAltaPrestamo" value="Aceptar"class="btn btn-primary"/>
+                    <input type="button" name="btnAceptarAltaPrestamo" id="btnAceptarAltaPrestamo" onclick="validarDatosPrestamo()" value="Aceptar"class="btn btn-primary"/>
                 </div>
             </div>
         </fieldset>
