@@ -1,38 +1,5 @@
 "use strict";
 
-function contieneUsuario(oUsuario){
-    for (const ejUsuario of this.usuarios) {
-
-        if (ejUsuario.idUsuario == oUsuario.idUsuario)
-            return true;
-
-
-    }
-    return false;
-}
-
-function contieneArticulo(oArticulo){
-    for (const ejArticulo of this.catalogo) {
-
-        if (ejArticulo.idArticulo == oArticulo.idArticulo)
-            return true;
-
-
-    }
-    return false;
-}
-
-function contienePrestamo(oPrestamo){
-    for (const ejPrestamo of this.prestamos) {
-
-        if (ejPrestamo.idPrestamo == oPrestamo.idPrestamo)
-            return true;
-
-
-    }
-    return false;
-}
-
 //Clase Biblioteca
 
 function Biblioteca(){
@@ -45,30 +12,45 @@ Biblioteca.prototype.optionsLibros = function(){
 
     let sOptions = '<option value="-1">Ninguno</option>';
 
-    for(let articulo of this.articulos){
-        if (articulo.prestado == false){ // && articulo instanceof Libro){
-            sOptions += '<option value="' + articulo.idArticulo + '">' + articulo.nombre + '</option>';
+    for(let articulo of this.catalogo){
+        if (articulo.bPrestado == false && articulo instanceof Libro){ 
+            sOptions += `<option value="${articulo.idArticulo}">${articulo.sTitulo}</option>`;
         }
     }
 
     return sOptions;
 }
 
+
+
 Biblioteca.prototype.optionsDVD = function(){
 
     let sOptions = '<option value="-1">Ninguno</option>';
 
-    for(let articulo of this.articulos){ 
-        if (articulo.prestado == false){ // && articulo instanceof DVD
-            sOptions += '<option value="' + articulo.idArticulo + '">' + articulo.nombre + '</option>';
+    for(let articulo of this.catalogo){ 
+        if (articulo.bPrestado == false && articulo instanceof DVD){ 
+            sOptions += `<option value="${articulo.idArticulo}">${articulo.sTitulo}</option>`;
         }
+    }
+
+    return sOptions;
+}
+
+Biblioteca.prototype.optionsUsuarios = function(){
+
+    let sOptions;
+
+    for(let usuario of this.usuarios){
+        
+            sOptions += `<option value="${usuario.idUsuario}">${usuario.nombre}</option>`;
+        
     }
 
     return sOptions;
 }
 
 Biblioteca.prototype.altaUsuario = function(oUsuario){
-    if(!contieneUsuario(oUsuario)){ //hay que hacer contiene();
+    if(!this.contieneUsuario(oUsuario)){
         this.usuarios.push(oUsuario);
         return 'Usuario dado de alta';
     }
@@ -77,7 +59,7 @@ Biblioteca.prototype.altaUsuario = function(oUsuario){
 }
 
 Biblioteca.prototype.altaArticulo = function(oArticulo){
-    if(!contieneArticulo(oArticulo)){ //hay que hacer contiene();
+    if(!this.contieneArticulo(oArticulo)){
         this.catalogo.push(oArticulo);
         return 'Articulo dado de alta';
     }
@@ -86,7 +68,7 @@ Biblioteca.prototype.altaArticulo = function(oArticulo){
 }
 
 Biblioteca.prototype.altaPrestamo = function(oPrestamo){
-    if(!contienePrestamo(oPrestamo)){ //hay que hacer contiene();
+    if(!this.contienePrestamo(oPrestamo)){ 
         this.prestamos.push(oPrestamo);
         return 'Prestamo dado de alta';
     }
@@ -172,6 +154,39 @@ Biblioteca.prototype.listadoTipoArticulo = function(sTipoArticulo){
     return tPrestamos;
 }
 
+Biblioteca.prototype.contieneUsuario = function (oUsuario){
+    for (const ejUsuario of this.usuarios) {
+
+        if (ejUsuario.idUsuario == oUsuario.idUsuario)
+            return true;
+
+
+    }
+    return false;
+}
+
+Biblioteca.prototype.contieneArticulo = function(oArticulo){
+    for (const ejArticulo of this.catalogo) {
+
+        if (ejArticulo.idArticulo == oArticulo.idArticulo)
+            return true;
+
+
+    }
+    return false;
+}
+
+Biblioteca.prototype.contienePrestamo = function(oPrestamo){
+    for (const ejPrestamo of this.prestamos) {
+
+        if (ejPrestamo.idPrestamo == oPrestamo.idPrestamo || ejPrestamo.usuario.idUsuario == oPrestamo.usuario.idUsuario)
+            return true;
+
+
+    }
+    return false;
+}
+
 
 
 
@@ -199,15 +214,16 @@ class Usuario {
 //Clase articulo
 
 class Articulo{
-    constructor(idArticulo, titulo) {
+    constructor(idArticulo, sTitulo, bPrestado) {
         this.idArticulo = idArticulo;
-        this.titulo = titulo;
+        this.sTitulo = sTitulo;
+        this.bPrestado = bPrestado;
 
     }
     toHTMLRow() {
         let sFila = "<tr>";
         sFila += "<td>" + this.idArticulo + "</td>";
-        sFila += "<td>" + this.titulo + "</td></tr>";
+        sFila += "<td>" + this.sTitulo + "</td></tr>";
 
         return sFila;
     }
@@ -218,8 +234,8 @@ class Articulo{
 
 
 class Libro extends Articulo{
-    constructor(autor, paginas,idArticulo, titulo) {
-        super(idArticulo, titulo);
+    constructor(autor, paginas,idArticulo, sTitulo, bPrestado) {
+        super(idArticulo, sTitulo, bPrestado);
         this.autor = autor;
         this.paginas = paginas;
 
@@ -240,8 +256,8 @@ class Libro extends Articulo{
 
 
 class DVD extends Articulo{
-    constructor(fechaEstreno, subtitulada,idArticulo, titulo) {
-        super(idArticulo, titulo);
+    constructor(fechaEstreno, subtitulada,idArticulo, titulo, bPrestado) {
+        super(idArticulo, titulo, bPrestado);
         this.fechaEstreno = fechaEstreno;
         this.subtitulada = subtitulada;
     }
