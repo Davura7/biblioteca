@@ -63,6 +63,10 @@ function gestionFormularios(sFormularioVisible) {
       frmAltaPrestamo.lstDVD1.innerHTML = oBiblioteca.optionsDVD();
       frmAltaPrestamo.lstDVD2.innerHTML = frmAltaPrestamo.lstDVD1.innerHTML;
       break;
+      case "frmListados":
+        frmListados.style.display="block";
+        break;
+      
   }
 }
 
@@ -221,4 +225,11 @@ alert("error");
   }
 
   //lstLibros1
+
+  //Ejercicio 4 Listados
+
+  function enviarListadoUsuarios(){
+      
+      
+  }
 }
