@@ -123,7 +123,7 @@ function validarDatosArticulo() {
   let titulo = frmAltaArticulo.txtTitulo.value;
   let autor = frmAltaArticulo.txtAutor.value;
   let paginas = frmAltaArticulo.txtPaginas.value;
-  let fechaEstreno = frmAltaArticulo.fechaEstreno;
+  let fechaEstreno = frmAltaArticulo.fechaEstreno.value;
   let oArticulo
 
   if (document.querySelector("#rbtTipoArticulo-L").checked) {
