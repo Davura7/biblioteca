@@ -32,6 +32,27 @@ function datosIniciales() {
   ];
 }
 
+function mostrarModalError(cuerpo) {
+
+  document.querySelector("#modalTitulo").innerHTML = 'Error';
+  document.querySelector("#modalCuerpo").innerHTML = cuerpo;
+  document.querySelector("#botonModal").className = 'btn btn-danger'
+
+  var myModal = new bootstrap.Modal(document.getElementById('myModal'))
+  myModal.show();
+
+}
+
+function mostrarModalInfo(cuerpo) {
+
+  document.querySelector("#modalTitulo").innerHTML = 'Información de la Operación';
+  document.querySelector("#modalCuerpo").innerHTML = cuerpo;
+  document.querySelector("#botonModal").className = 'btn btn-info'
+
+  var myModal = new bootstrap.Modal(document.getElementById('myModal'))
+  myModal.show();
+
+}
 
 // Gestión de formularios
 function gestionFormularios(sFormularioVisible) {
@@ -49,7 +70,7 @@ function gestionFormularios(sFormularioVisible) {
     case "frmAltaPrestamo":
       frmAltaPrestamo.style.display = "block";
 
-      
+
       frmAltaPrestamo.lstLibros1.innerHTML = oBiblioteca.optionsLibros();
       frmAltaPrestamo.lstDVD1.innerHTML = oBiblioteca.optionsDVD();
       frmAltaPrestamo.lstLibros2.innerHTML = oBiblioteca.optionsLibros();
@@ -58,8 +79,8 @@ function gestionFormularios(sFormularioVisible) {
       break;
     case "frmDevolverPrestamo":
       frmDevolverPrestamo.style.display = "block";
-      
-      frmDevolverPrestamo.lstPrestamo.innerHTML=oBiblioteca.optionsPrestamo();
+
+      frmDevolverPrestamo.lstPrestamo.innerHTML = oBiblioteca.optionsPrestamo();
       break;
   }
 }
@@ -87,11 +108,12 @@ function validarDatosUsuario() {
     nombre == '' ||
     apellidos == '' ||
     isNaN(parseInt(telefono)))
-    alert('Debe introducir todos los datos correctamente');
+
+    mostrarModalError('Debe introducir todos los datos correctamente');
 
   else {
     let oUsuario = new Usuario(idUsuario, nombre, apellidos, telefono);
-    alert(oBiblioteca.altaUsuario(oUsuario));
+    mostrarModalInfo(oBiblioteca.altaUsuario(oUsuario));
   }
 }
 
@@ -131,7 +153,7 @@ function validarDatosArticulo() {
       autor == '' ||
       isNaN(parseInt(paginas))) {
 
-      alert('Debe introducir todos los datos correctamente');
+      mostrarModalError('Debe introducir todos los datos correctamente');
 
     }
 
@@ -139,7 +161,7 @@ function validarDatosArticulo() {
 
       oArticulo = new Libro(autor, paginas, idArticulo, titulo);
 
-      alert(oBiblioteca.altaArticulo(oArticulo));
+      mostrarModalInfo(oBiblioteca.altaArticulo(oArticulo));
 
     }
   }
@@ -151,7 +173,7 @@ function validarDatosArticulo() {
       autor == '' ||
       fechaEstreno == '') {
 
-      alert('Debe introducir todos los datos correctamente');
+      mostrarModalError('Debe introducir todos los datos correctamente');
 
     }
 
@@ -162,7 +184,7 @@ function validarDatosArticulo() {
       let subtitulada = document.querySelector("#rbtSubtitulado-S").checked;
       oArticulo = new DVD(new Date(fechaEstreno), subtitulada, idArticulo, titulo);
 
-      alert(oBiblioteca.altaArticulo(oArticulo));
+      mostrarModalInfo(oBiblioteca.altaArticulo(oArticulo));
 
     }
 
@@ -174,81 +196,81 @@ function validarDatosArticulo() {
 //Un usuario sólo podrá tener un préstamo en vigor. No podrá solicitar otro préstamo hasta que realice la devolución del anterior.
 
 
-function mostrar2Combos(){
+function mostrar2Combos() {
 
   let divLibro = document.getElementById("divLibro");
   let divDVD = document.getElementById("divDVD");
-  if (frmAltaPrestamo.lstLibros1.value=="-1"){
-      divLibro.style.display="none";
+  if (frmAltaPrestamo.lstLibros1.value == "-1") {
+    divLibro.style.display = "none";
 
   }
-  else{
+  else {
 
-    divLibro.style.display="block";
+    divLibro.style.display = "block";
   }
 
-  if (frmAltaPrestamo.lstDVD1.value=="-1"){
-    divDVD.style.display="none";
+  if (frmAltaPrestamo.lstDVD1.value == "-1") {
+    divDVD.style.display = "none";
 
   }
 
-  else{
+  else {
 
-    divDVD.style.display="block";
+    divDVD.style.display = "block";
   }
 }
 
 
 function validarDatosPrestamo() {
 
-  let idPrestamo =  document.getElementById("txtIdPrestamo").value;
-  let lstUsuario =  document.getElementById("lstUsuario").value;
+  let idPrestamo = document.getElementById("txtIdPrestamo").value;
+  let lstUsuario = document.getElementById("lstUsuario").value;
 
-  let lstLibros1= document.getElementById("lstLibros1").value;
-  let lstLibros2= document.getElementById("lstLibros2").value;
-  let lstDVD1= document.getElementById("lstDVD1").value;
-  let lstDVD2= document.getElementById("lstDVD2").value;
-  
+  let lstLibros1 = document.getElementById("lstLibros1").value;
+  let lstLibros2 = document.getElementById("lstLibros2").value;
+  let lstDVD1 = document.getElementById("lstDVD1").value;
+  let lstDVD2 = document.getElementById("lstDVD2").value;
 
-  if (isNaN(parseInt(idPrestamo)) || (lstLibros1=="-1" && lstDVD1=="-1" ) || (lstLibros1==lstLibros2 && lstLibros2!="-1") || (lstDVD1==lstDVD2 && lstDVD2!="-1")){
 
-alert("Debe introducir todos los datos correctamente");
-    
+  if (isNaN(parseInt(idPrestamo)) || (lstLibros1 == "-1" && lstDVD1 == "-1") || (lstLibros1 == lstLibros2 && lstLibros2 != "-1") || (lstDVD1 == lstDVD2 && lstDVD2 != "-1")) {
+
+    mostrarModalError("Debe introducir todos los datos correctamente");
+
   }
-  else{
+  else {
     let arrayArticulos = new Array();
     let articuloPrestamo;
-    let fechaFin=null;
+    let fechaFin = null;
     let fechaInicio = new Date();
     let usuarioPrestamo = oBiblioteca.getUsuario(lstUsuario);
-     
 
-   
-    if(lstLibros1!="-1"){
-       articuloPrestamo = oBiblioteca.getArticulo(lstLibros1);
-       arrayArticulos.push(articuloPrestamo);
 
-      if(lstLibros2!="-1"){
+
+    if (lstLibros1 != "-1") {
+      articuloPrestamo = oBiblioteca.getArticulo(lstLibros1);
+      arrayArticulos.push(articuloPrestamo);
+
+      if (lstLibros2 != "-1") {
         articuloPrestamo = oBiblioteca.getArticulo(lstLibros2);
         arrayArticulos.push(articuloPrestamo);
       }
     }
 
-    if(lstDVD1!="-1"){
+    if (lstDVD1 != "-1") {
       articuloPrestamo = oBiblioteca.getArticulo(lstDVD1);
       arrayArticulos.push(articuloPrestamo);
-     if(lstDVD2!="-1"){
-       articuloPrestamo = oBiblioteca.getArticulo(lstDVD2);
-       arrayArticulos.push(articuloPrestamo);
-     }
-   }
+      if (lstDVD2 != "-1") {
+        articuloPrestamo = oBiblioteca.getArticulo(lstDVD2);
+        arrayArticulos.push(articuloPrestamo);
+      }
+    }
     oBiblioteca.prestarArticulos(arrayArticulos);
 
 
 
 
-    let oPrestamo = new Prestamo(idPrestamo,arrayArticulos ,usuarioPrestamo, fechaInicio,fechaFin);
-    alert(oBiblioteca.altaPrestamo(oPrestamo));
+    let oPrestamo = new Prestamo(idPrestamo, arrayArticulos, usuarioPrestamo, fechaInicio, fechaFin);
+    mostrarModalInfo(oBiblioteca.altaPrestamo(oPrestamo));
 
     frmAltaPrestamo.style.display = "none";
   }
@@ -258,7 +280,7 @@ alert("Debe introducir todos los datos correctamente");
 
 function devolverPrestamoSelect() {
 
-  let prestamoDevolver= document.getElementById("lstPrestamo").value;
+  let prestamoDevolver = document.getElementById("lstPrestamo").value;
   oBiblioteca.borrarPrestamo(prestamoDevolver);
   frmDevolverPrestamo.style.display = "none";
 
