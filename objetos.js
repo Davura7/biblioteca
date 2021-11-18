@@ -2,18 +2,18 @@
 
 //Clase Biblioteca
 
-function Biblioteca(){
-this.usuarios=[];
-this.catalogo=[];
-this.prestamos=[];
+function Biblioteca() {
+    this.usuarios = [];
+    this.catalogo = [];
+    this.prestamos = [];
 }
 
-Biblioteca.prototype.optionsLibros = function(){
+Biblioteca.prototype.optionsLibros = function () {
 
     let sOptions = '<option value="-1">Ninguno</option>';
 
-    for(let articulo of this.catalogo){
-        if (articulo.bPrestado == false && articulo instanceof Libro){ 
+    for (let articulo of this.catalogo) {
+        if (articulo.bPrestado == false && articulo instanceof Libro) {
             sOptions += `<option value="${articulo.idArticulo}">${articulo.sTitulo}</option>`;
         }
     }
@@ -21,12 +21,14 @@ Biblioteca.prototype.optionsLibros = function(){
     return sOptions;
 }
 
-Biblioteca.prototype.optionsDVD = function(){
+
+
+Biblioteca.prototype.optionsDVD = function () {
 
     let sOptions = '<option value="-1">Ninguno</option>';
 
-    for(let articulo of this.catalogo){ 
-        if (articulo.bPrestado == false && articulo instanceof DVD){ 
+    for (let articulo of this.catalogo) {
+        if (articulo.bPrestado == false && articulo instanceof DVD) {
             sOptions += `<option value="${articulo.idArticulo}">${articulo.sTitulo}</option>`;
         }
     }
@@ -34,8 +36,37 @@ Biblioteca.prototype.optionsDVD = function(){
     return sOptions;
 }
 
-Biblioteca.prototype.altaUsuario = function(oUsuario){
-    if(!contieneUsuario(oUsuario)){ //hay que hacer contiene();
+Biblioteca.prototype.optionsUsuarios = function () {
+
+    let sOptions;
+
+    for (let usuario of this.usuarios) {
+
+        sOptions += `<option value="${usuario.idUsuario}">${usuario.nombre}</option>`;
+
+    }
+
+    return sOptions;
+}
+
+Biblioteca.prototype.optionsPrestamo = function () {
+
+    let sOptions;
+
+    for (const prestamo of this.prestamos) {
+        if (prestamo.fechaFin == null)
+            sOptions += `<option value="${prestamo.idPrestamo}">ID: ${prestamo.idPrestamo} Usuario: ${prestamo.usuario.idUsuario}</option>`;
+
+    }
+
+    return sOptions;
+}
+
+
+
+
+Biblioteca.prototype.altaUsuario = function (oUsuario) {
+    if (!this.contieneUsuario(oUsuario)) {
         this.usuarios.push(oUsuario);
         return 'Usuario dado de alta';
     }
@@ -43,8 +74,8 @@ Biblioteca.prototype.altaUsuario = function(oUsuario){
         return 'Usuario existente';
 }
 
-Biblioteca.prototype.altaArticulo = function(oArticulo){
-    if(!this.contieneArticulo(oArticulo)){
+Biblioteca.prototype.altaArticulo = function (oArticulo) {
+    if (!this.contieneArticulo(oArticulo)) {
         this.catalogo.push(oArticulo);
         return 'Articulo dado de alta';
     }
@@ -52,94 +83,94 @@ Biblioteca.prototype.altaArticulo = function(oArticulo){
         return 'Articulo existente';
 }
 
-Biblioteca.prototype.altaPrestamo = function(oPrestamo){
-    if(!contienePrestamo(oPrestamo)){ //hay que hacer contiene();
+Biblioteca.prototype.altaPrestamo = function (oPrestamo) {
+    if (!this.contienePrestamo(oPrestamo)) {
         this.prestamos.push(oPrestamo);
         return 'Prestamo dado de alta';
     }
     else
-        return 'Prestamo existente';
+        return 'Prestamo no disponible';
 }
 
-Biblioteca.prototype.devolverPrestamo = function(idPrestamo){
+Biblioteca.prototype.devolverPrestamo = function (idPrestamo) {
 
     for (const prestamoBucle of this.prestamos) {
-        if(prestamoBucle.idPrestamo == idPrestamo){
+        if (prestamoBucle.idPrestamo == idPrestamo) {
             this.prestamos.remove(prestamoBucle);
-        return "Préstamo devuelto.";
+            return "Préstamo devuelto.";
         }
         return "Préstamo no existente.";
     }
 }
 
-Biblioteca.prototype.listadoUsuarios = function(){
+Biblioteca.prototype.listadoUsuarios = function () {
     let tUsuarios = '<table><tr><th>ID</th><th>Nombre</th><th>Apellidos</th><th>Teléfono</th></tr>';
-    for(const oUsuario of this.usuarios){
-        tUsuario+=toHTMLRow(oUsuario);
+    for (const oUsuario of this.usuarios) {
+        tUsuario += toHTMLRow(oUsuario);
     }
-    tUsuarios+= '</table>';
+    tUsuarios += '</table>';
     return tUsuarios;
 }
 
-Biblioteca.prototype.listadoArticulos = function(){
+Biblioteca.prototype.listadoArticulos = function () {
     let tArticulo = '<table><tr><th>ID</th><th>Titulo</th></tr>';
-    for(const oArticulo of catalogo){
-        tArticulo+=toHTMLRow(oArticulo);
+    for (const oArticulo of catalogo) {
+        tArticulo += toHTMLRow(oArticulo);
     }
-    tArticulo+= '</table>';
+    tArticulo += '</table>';
     return tArticulo;
 }
 
 
-Biblioteca.prototype.listadoPrestamos = function(dtFechaInicio, dtFechaFin){
+Biblioteca.prototype.listadoPrestamos = function (dtFechaInicio, dtFechaFin) {
     let tPrestamos = '<table><tr><th>IdPréstamo</th><th>Artículos</th><th>Usuario</th><th>FechaInicio</th><th>FechaFin</th></tr>';
-    for(const oPrestamo of this.prestamos){
-        if(dtFechaInicio<oPrestamo.fechaInicio && dtFechaFin>oPrestamo.fechaInicio)
-        tPrestamos+=toHTMLRow(oPrestamo);
-        
+    for (const oPrestamo of this.prestamos) {
+        if (dtFechaInicio < oPrestamo.fechaInicio && dtFechaFin > oPrestamo.fechaInicio)
+            tPrestamos += toHTMLRow(oPrestamo);
+
     }
-    tPrestamos+= '</table>';
+    tPrestamos += '</table>';
     return tPrestamos;
 }
 
-Biblioteca.prototype.listadoPrestamosUsuario = function(idUsuario){
+Biblioteca.prototype.listadoPrestamosUsuario = function (idUsuario) {
     let tPrestamos = '<table><tr><th>IdPréstamo</th><th>Artículos</th><th>Usuario</th><th>FechaInicio</th><th>FechaFin</th></tr>';
-    for(const oPrestamo of this.prestamos){
-        if(idUsuario==oPrestamo.idUsuario)
-        tPrestamos+=toHTMLRow(oPrestamo);
-        
+    for (const oPrestamo of this.prestamos) {
+        if (idUsuario == oPrestamo.idUsuario)
+            tPrestamos += toHTMLRow(oPrestamo);
+
     }
-    tPrestamos+= '</table>';
+    tPrestamos += '</table>';
     return tPrestamos;
 }
 
 
-Biblioteca.prototype.listadoTipoArticulo = function(sTipoArticulo){
+Biblioteca.prototype.listadoTipoArticulo = function (sTipoArticulo) {
     // NO SE SI ESTO FUNCIONA, ASÍ QUE TEN UN BUEN DÍA
     let tPrestamos = '<table><tr><th>IdArtículo</th><th>Título</th>';
 
-    if(sTipoArticulo instanceof Libro){
-    tPrestamos+='<th>Autor</th><th>Paginas</th></tr>';
-    for(const oPrestamo of this.prestamos){
-        if(oPrestamo instanceof Libro){
-            tPrestamos+=toHTMLRow(oPrestamo);
+    if (sTipoArticulo instanceof Libro) {
+        tPrestamos += '<th>Autor</th><th>Paginas</th></tr>';
+        for (const oPrestamo of this.prestamos) {
+            if (oPrestamo instanceof Libro) {
+                tPrestamos += toHTMLRow(oPrestamo);
             }
         }
     }
 
-    if(sTipoArticulo instanceof DVD){
-    tPrestamos+='<th>Fecha de Estreno</th><th>Subtitulada</th></tr>';
-    for(const oPrestamo of this.prestamos){
-        if(oPrestamo instanceof DVD){
-            tPrestamos+=toHTMLRow(oPrestamo);
+    if (sTipoArticulo instanceof DVD) {
+        tPrestamos += '<th>Fecha de Estreno</th><th>Subtitulada</th></tr>';
+        for (const oPrestamo of this.prestamos) {
+            if (oPrestamo instanceof DVD) {
+                tPrestamos += toHTMLRow(oPrestamo);
+            }
         }
     }
-}
-    tPrestamos+= '</table>';
+    tPrestamos += '</table>';
     return tPrestamos;
 }
 
-Biblioteca.prototype.contieneUsuario = function (oUsuario){
+Biblioteca.prototype.contieneUsuario = function (oUsuario) {
     for (const ejUsuario of this.usuarios) {
 
         if (ejUsuario.idUsuario == oUsuario.idUsuario)
@@ -150,7 +181,7 @@ Biblioteca.prototype.contieneUsuario = function (oUsuario){
     return false;
 }
 
-Biblioteca.prototype.contieneArticulo = function(oArticulo){
+Biblioteca.prototype.contieneArticulo = function (oArticulo) {
     for (const ejArticulo of this.catalogo) {
 
         if (ejArticulo.idArticulo == oArticulo.idArticulo)
@@ -161,15 +192,86 @@ Biblioteca.prototype.contieneArticulo = function(oArticulo){
     return false;
 }
 
-Biblioteca.prototype.contienePrestamo = function(oPrestamo){
+Biblioteca.prototype.contienePrestamo = function (oPrestamo) {
     for (const ejPrestamo of this.prestamos) {
 
-        if (ejPrestamo.idPrestamo == oPrestamo.idPrestamo)
+        if (ejPrestamo.idPrestamo == oPrestamo.idPrestamo || (ejPrestamo.usuario.idUsuario == oPrestamo.usuario.idUsuario && ejPrestamo.fechaFin==null))
+
             return true;
 
 
     }
     return false;
+}
+
+
+
+Biblioteca.prototype.getUsuario = function (sIdUsuario) {
+
+    let usuarioPrestamo;
+    for (const usuario of oBiblioteca.usuarios) {
+        if (usuario.idUsuario == sIdUsuario) {
+            usuarioPrestamo = usuario;
+
+        }
+
+
+    }
+    return usuarioPrestamo;
+
+}
+
+Biblioteca.prototype.getArticulo = function (sIdArticulo) {
+
+    let articuloPrestamo;
+    for (const articulo of oBiblioteca.catalogo) {
+        if (articulo.idArticulo == sIdArticulo) {
+            articuloPrestamo = articulo;
+
+        }
+
+
+    }
+    return articuloPrestamo;
+
+}
+
+
+Biblioteca.prototype.borrarPrestamo = function (sIdPrestamo) {
+
+    for (const prestamo of this.prestamos) {
+        if (prestamo.idPrestamo == sIdPrestamo) {
+            prestamo.fechaFin = new Date();
+            this.quitarArticulosPrestados(prestamo.articulos);
+        }
+    }
+
+}
+
+Biblioteca.prototype.prestarArticulos = function (arrayArticulos) {
+
+    for (const articuloBliblioteca of this.catalogo) {
+
+        for (const articulo of arrayArticulos) {
+            if (articuloBliblioteca.idArticulo == articulo.idArticulo) {
+
+                articuloBliblioteca.bPrestado = true;
+            }
+        }
+    }
+}
+
+Biblioteca.prototype.quitarArticulosPrestados = function (arrayArticulos) {
+
+    for (const articuloBliblioteca of this.catalogo) {
+
+        for (const articulo of arrayArticulos) {
+            if (articuloBliblioteca.idArticulo == articulo.idArticulo) {
+
+                articuloBliblioteca.bPrestado = false;
+            }
+        }
+    }
 }
 
 
@@ -198,7 +300,7 @@ class Usuario {
 
 //Clase articulo
 
-class Articulo{
+class Articulo {
     constructor(idArticulo, sTitulo, bPrestado) {
         this.idArticulo = idArticulo;
         this.sTitulo = sTitulo;
@@ -218,8 +320,8 @@ class Articulo{
 //Clase libro
 
 
-class Libro extends Articulo{
-    constructor(autor, paginas,idArticulo, sTitulo, bPrestado) {
+class Libro extends Articulo {
+    constructor(autor, paginas, idArticulo, sTitulo, bPrestado) {
         super(idArticulo, sTitulo, bPrestado);
         this.autor = autor;
         this.paginas = paginas;
@@ -240,8 +342,8 @@ class Libro extends Articulo{
 //Clase DVD
 
 
-class DVD extends Articulo{
-    constructor(fechaEstreno, subtitulada,idArticulo, titulo, bPrestado) {
+class DVD extends Articulo {
+    constructor(fechaEstreno, subtitulada, idArticulo, titulo, bPrestado) {
         super(idArticulo, titulo, bPrestado);
         this.fechaEstreno = fechaEstreno;
         this.subtitulada = subtitulada;
@@ -265,10 +367,10 @@ class Prestamo {
         this.idPrestamo = idPrestamo;
         this.articulos = articulos;
         this.usuario = usuario;
-        this.fechaInicio=fechaInicio;
-        this.fechaFin=fechaFin;       
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
     }
-    
+
     toHTMLRow() {
         let sFila = "<tr>";
         sFila += "<td>" + this.idPrestamo + "</td>";
