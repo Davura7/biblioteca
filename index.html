@@ -38,6 +38,10 @@
           <li>
             <a href="#" onclick="gestionFormularios('frmDevolverPrestamo')">Devolver préstamo</a>
           </li>
+
+          <li>
+            <a href="#" onclick="gestionFormularios('frmListados')">Listados</a>
+          </li>
             
         </ul>
     </div>
@@ -171,9 +175,9 @@
           
             <!-- Text input-->
             <div class="form-group">
-              <label class="col-xs-4 control-label" for="txtIdPrestamo">ID Artículo</label>
+              <label class="col-xs-4 control-label" for="txtIdPrestamo">ID Préstamo</label>
               <div class="col-xs-4">
-                  <input id="txtIdPrestamo" name="txtIdPrestamo" placeholder="ID Prestamo" class="form-control input-md" type="text">
+                  <input id="txtIdPrestamo" name="txtIdPrestamo" placeholder="ID Préstamo" class="form-control input-md" type="text">
               </div>
             </div>
 
@@ -181,12 +185,12 @@
             <div class="form-group">
                 <label class="col-xs-4 control-label" for="lstLibros1">Libro 1</label>
                 <div class="col-xs-4">
-                    <select id="lstLibros1" name="lstLibros1" class="form-control input-md">
+                    <select id="lstLibros1" onchange="mostrar2Combos()" name="lstLibros1" class="form-control input-md">
                     </select>
                 </div>
             </div>
             <!-- Select -->
-            <div class="form-group">
+            <div class="form-group" id="divLibro" style="display: none;">
                 <label class="col-xs-4 control-label" for="lstLibros2">Libro 2</label>
                 <div class="col-xs-4">
                     <select id="lstLibros2" name="lstLibros2" class="form-control input-md">
@@ -197,12 +201,12 @@
             <div class="form-group">
                 <label class="col-xs-4 control-label" for="lstDVD1">DVD 1</label>
                 <div class="col-xs-4">
-                    <select id="lstDVD1" name="lstDVD1" class="form-control input-md">
+                    <select id="lstDVD1" onchange="mostrar2Combos()" name="lstDVD1" class="form-control input-md">
                     </select>
                 </div>
             </div>
             <!-- Select -->
-            <div class="form-group">
+            <div class="form-group"  id="divDVD" style="display: none;"> 
                 <label class="col-xs-4 control-label" for="lstDVD2">DVD 2</label>
                 <div class="col-xs-4">
                     <select id="lstDVD2" name="lstDVD2" class="form-control input-md">
@@ -211,32 +215,21 @@
             </div>
              <!-- Text input-->
              <div class="form-group">
-              <label class="col-xs-4 control-label" for="txtIdUsuario">ID Usuario</label>
+              <label class="col-xs-4 control-label" for="lstUsuario">Usuario</label>
               <div class="col-xs-4">
-                  <input id="txtIdUsuario" name="txtIdUsuario" placeholder="ID Usuario" class="form-control input-md" type="text">
+                  <select id="lstUsuario" name="lstUsuario" class="form-control input-md"></select>
               </div>
             </div>
-            <!-- Text input-->
-            <div class="form-group">
-              <label class="col-xs-4 control-label" for="txtFechaInicio">Fecha inicio</label>
-              <div class="col-xs-4">
-                  <input id="txtFechaInicio" name="txtFechaInicio" placeholder="Fecha Inicio" class="form-control input-md" type="text">
-              </div>
-            </div>
-            <!-- Text input-->
-            <div class="form-group">
-              <label class="col-xs-4 control-label" for="txtFechaFin">Fecha fin</label>
-              <div class="col-xs-4">
-                  <input id="txtFechaFin" name="txtFechaFin" placeholder="Fecha Fin" class="form-control input-md" type="text">
-              </div>
-            </div>
+      
+            
+            
 
 
             <!-- Botón Aceptar Alta Prestamo -->
             <div class="form-group">
               <label class="col-xs-4 control-label" for="btnAceptarAltaPrestamo"></label>
                 <div class="col-xs-4">
-                    <input type="button" name="btnAceptarAltaPrestamo" id="btnAceptarAltaPrestamo" value="Aceptar"class="btn btn-primary"/>
+                    <input type="button" name="btnAceptarAltaPrestamo" id="btnAceptarAltaPrestamo" onclick="validarDatosPrestamo()" value="Aceptar"class="btn btn-primary"/>
                 </div>
             </div>
         </fieldset>
@@ -247,9 +240,9 @@
             <legend>Devolver prestamo</legend>
             <!-- Text input-->
             <div class="form-group">
-                <label class="col-xs-4 control-label" for="txtIdPrestamo">Libro 1</label>
+                <label class="col-xs-4 control-label" for="lstPrestamo">Prestamo</label>
                 <div class="col-xs-4">
-                  <input id="txtIdPrestamo" name="txtIdPrestamo" placeholder="ID Prestamo" class="form-control input-md" type="text">
+                  <select id="lstPrestamo" name="lstPrestamo" class="form-control input-md"></select>
                 </div>
             </div>
           
@@ -258,12 +251,67 @@
               <label class="col-xs-4 control-label" for="btnAceptarDevolverPrestamo"></label>
 
                 <div class="col-xs-4">
-                    <input type="button" name="btnAceptarDevolverPrestamo" id="btnAceptarDevolverPrestamo" value="Aceptar"class="btn btn-primary"/>
+                    <input type="button" name="btnAceptarDevolverPrestamo" id="btnAceptarDevolverPrestamo" onclick="devolverPrestamoSelect()" value="Aceptar"class="btn btn-primary"/>
                 </div>
             </div>
         </fieldset>
       </form>
       </div>
+
+      <!-- Formulario Listado -->
+
+      <form class="form-horizontal" name="frmListados" id="frmListados">
+        <div class="form-group ">
+          <label class="col-xs-4 control-label" for="btnListadoUsuarios">Listado Usuarios</label>
+          <div class="col-xs-4">
+            <input type="button" name="btnListadoUsuarios" id="btnListadoUsuarios" value="Ver Listado" class="btn btn-primary" onclick="enviarListadoUsuarios();"/>
+        </div>
+        </div>
+        <div class="form-group ">
+          <label class="col-xs-4 control-label" for="btnListadoArticulos">Listado Articulos</label>
+          <div class="col-xs-4">
+            <input type="button" name="btnListadoArticulos" id="btnListadoArticulos" value="Ver Listado" class="btn btn-primary"/>
+        </div>
+        </div>
+        <div class="form-group ">
+          <label class="col-xs-4 control-label" for="rbtListarArticulo">Listado Articulos por tipo</label>
+          <div class="col-xs-1">
+            <div class="radio">
+                <input name="rbtListarArticulo" id="rbtListarArticulo-Libro"  value="libro" type="radio" checked>
+                <label for="rbtListarArticulo-Libro">Libro</label>
+            </div>
+            </div>
+  
+            <div class="col-xs-1">
+            <div class="radio">
+                <input name="rbtListarArticulo" id="rbtListarArticulo-DVD" value="dvd" type="radio">
+                <label for="rbtListarArticulo-DVD">DVD</label>
+            </div>
+            </div>
+        
+  
+          <div class="col-xs-3">
+            <input type="button" name="btnListadoArticuloTipo" id="btnListadoArticuloTipo" value="Ver Listado" class="btn btn-primary"/>
+          </div>
+          </div>
+        
+  
+        <div class="form-group ">
+          <label class="col-xs-4 control-label">Listado Prestamos</label>
+          
+            <div class="col-xs-2">
+              <input id="txtFechaInicio" name="txtFechaInicio" placeholder="Fecha inicio" class="form-control " type="text">
+            </div>
+            <div class="col-xs-2">
+              <input id="txtFechaFin" name="txtFechaFin" placeholder="Fecha fin" class="form-control " type="text">
+            </div>
+  
+          <div class="col-xs-4">
+            <input type="button" name="btnListadoPrestamos" id="btnListadoPrestamos" value="Ver Listado" class="btn btn-primary"/>
+          </div>
+        </div>     
+  
+      </form>
 
       <script type="text/javascript" src="objetos.js"></script>
       <script type="text/javascript" src="codigo.js"></script>
